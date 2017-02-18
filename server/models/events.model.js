@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 var Schema     = mongoose.Schema;
 
 var eventSchema = new Schema({
-  title     : { type: String, required: true}
+  title     : { type: String, required: true},
   eventName : { type: String, required: true},
   date      : { type: Date, required: true},
   email     : { type: String, required: true}
@@ -13,6 +13,6 @@ var eventSchema = new Schema({
   timestamps : true
 })
 
-var Events = mongoose.model('Events', usersSchema)
+var Events = mongoose.model('Events', eventSchema)
 
 module.exports = Events;

@@ -7,6 +7,10 @@ var bodyParser = require('body-parser');
 var cors = require('cors')
 require('dotenv').config()
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/portofolio-db-validation');
+mongoose.Promise = global.Promise;
+
 var index = require('./routes/index');
 var users = require('./routes/users');
 var events = require('./routes/events.route')

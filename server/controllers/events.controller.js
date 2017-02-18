@@ -14,26 +14,20 @@ module.exports = {
     let newEvent = events({
       title    : req.body.title,
       eventName: req.body.eventname,
-      // date     : req.body.date,
+      date     : req.body.date,
       email    : req.body.email
     })
     newEvent.save((err,create) =>{
       if (err) {
         var errMsg = ""
-        if (err.errors.email) {
-          errMsg += err.errors.email.message + "\n"
-          console.log("1");
-        }
-        if (err.errors.eventName) {
-          errMsg += err.errors.eventName.message + "\n"
-          console.log("2");
-        }
-        if (err.errors.title) {
-          errMsg += err.errors.title.message + "\n"
-          console.log("3");
-        }
-        console.log(errMsg);
+        // console.log(err.errors.date.message);
+        if (err.errors.email)     errMsg += err.errors.email.message + "\n"
+        if (err.errors.date)      errMsg += err.errors.date.message + "\n"
+        if (err.errors.eventName) errMsg += err.errors.eventName.message + "\n"
+        if (err.errors.title)     errMsg += err.errors.title.message + "\n"
+
         res.send(errMsg)
+        // res.send(err)
       }
       else {
         res.json({create})

@@ -2,14 +2,20 @@
 
 const mongoose = require('mongoose');
 var Schema     = mongoose.Schema;
+var uniqueValidator = require('mongoose-unique-validator');
 
 var eventSchema = new Schema({
-  title     : { type: String,  unique: true, required: [true, 'Title required'], index: { unique: true }},
+  title     : { type: String,  unique: true, required: [true, 'Title required'], unique : true},
   eventName : { type: String, required: [true, 'Event name required']},
-  // date      : { type: Date, required: [true, 'Date event required']},
+  date      : { type: String, required: [true, 'Date event required'],
+              validate: {validator: (x) => {
+                return  /^(\d{1,2})-(\d{1,2})-(\d{4})$/.test(x)
+              },
+              message: 'Invalid date format'  }
+            },
   email     : { type    : String,
                 validate: {
-                  validator: function(x) {
+                  validator: (x) => {
                       return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(x);
                   },
                   message: 'Invalid email address'  }
@@ -19,6 +25,7 @@ var eventSchema = new Schema({
   timestamps : true
 })
 
+eventSchema.plugin(uniqueValidator);
 var Events = mongoose.model('Events', eventSchema)
 
 module.exports = Events;
